@@ -1,0 +1,15 @@
+{
+  "name": "utma-sitio-prototipo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Prototipo navegable del nuevo sitio de la UTMA",
+  "scripts": {
+    "generar": "python herramientas/generar.py",
+    "build": "tailwindcss -c tailwind.config.js -i src/input.css -o css/styles.css --minify",
+    "dev": "tailwindcss -c tailwind.config.js -i src/input.css -o css/styles.css --watch",
+    "todo": "python herramientas/generar.py && tailwindcss -c tailwind.config.js -i src/input.css -o css/styles.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
+}

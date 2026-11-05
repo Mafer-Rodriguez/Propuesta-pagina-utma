@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Componentes UTMA — se usan en todas las páginas.
+   Tokens de color y tipografía en tailwind.config.js
+   ============================================================ */
+@layer base {
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { @apply bg-paper font-sans text-ink antialiased; -webkit-tap-highlight-color: transparent; }
+  h1, h2, h3, h4 { @apply font-display; text-wrap: balance; }
+  :focus-visible { outline: 3px solid #F57E26; outline-offset: 2px; border-radius: 6px; }
+  [hidden] { display: none !important; }
+  ::selection { background: #FDC24E; color: #1D191A; }
+}
+
+@layer components {
+  .wrap { @apply mx-auto w-full max-w-7xl px-4 sm:px-6; }
+  .eyebrow { @apply text-xs font-bold uppercase tracking-wider text-ink/60; }
+  .sec { @apply py-14 sm:py-20; }
+  .sec-title { @apply font-display text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl; }
+  .sec-lead { @apply mt-3 max-w-2xl text-lg leading-relaxed text-ink/75; }
+  .page-title { @apply font-display text-4xl font-extrabold leading-[1.04] tracking-tight sm:text-6xl; }
+  .prose-u { @apply max-w-[65ch] space-y-4 text-[17px] leading-relaxed text-ink/85; }
+  .prose-u h2 { @apply pt-4 text-2xl font-bold text-ink; }
+  .prose-u ul { @apply list-disc space-y-1.5 pl-5; }
+
+  .btn { @apply inline-flex min-h-[44px] items-center justify-center gap-2 whitespace-nowrap rounded-xl px-5 text-[15px] font-bold transition-colors duration-150 ease-out disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-primary { @apply btn bg-ut text-white hover:bg-[#006650]; }
+  .btn-navy { @apply btn bg-navy text-white hover:bg-navy-deep; }
+  .btn-ghost { @apply btn border-2 border-ink/15 bg-white text-ink hover:border-navy; }
+  .btn-sm { @apply min-h-[36px] rounded-lg px-3 text-sm; }
+  .link { @apply font-bold text-navy underline-offset-4 hover:underline; }
+
+  .card { @apply rounded-2xl border border-ink/10 bg-white; }
+  .card-hover { @apply card transition duration-200 ease-out hover:-translate-y-0.5 hover:border-navy/40 hover:shadow-lg; }
+  .chip { @apply inline-flex min-h-[40px] cursor-pointer items-center gap-2 rounded-full border border-ink/15 bg-white px-3.5 text-sm font-bold transition-colors duration-150 hover:border-navy; }
+  .chip[aria-pressed="true"], .chip[aria-selected="true"] { @apply border-ink bg-ink text-white; }
+  .badge { @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold; }
+  .dot { @apply inline-block h-2.5 w-2.5 shrink-0 rounded-full; }
+
+  .label { @apply mb-1.5 block text-sm font-bold; }
+  .input { @apply block min-h-[48px] w-full rounded-xl border-2 border-ink/15 bg-white px-3.5 text-base text-ink placeholder:text-ink/45 focus:border-navy focus:outline-none focus:ring-4 focus:ring-navy-soft; }
+  .input[aria-invalid="true"] { @apply border-carmin focus:ring-[#FDECF0]; }
+  .hint { @apply mt-1 text-sm text-ink/60; }
+  .err { @apply mt-1 text-sm font-bold text-carmin; }
+
+  .crumbs { @apply flex flex-wrap items-center gap-1.5 text-sm text-ink/60; }
+  .crumbs a { @apply hover:text-navy hover:underline; }
+
+  /* Imagen pendiente: patrón de rayos con el color del área (sustituir por fotografía real) */
+  .media { position: relative; overflow: hidden; background-color: var(--s, #E6F0F5);
+    background-image: repeating-conic-gradient(from -10deg at 0% 100%, var(--c, #235F83) 0deg 5deg, transparent 5deg 13deg); }
+  .media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(160deg, transparent 40%, rgba(255,255,255,.55)); }
+
+  .details-u { @apply rounded-xl border border-ink/10 bg-white; }
+  .details-u > summary { @apply flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 px-5 py-3 font-bold; }
+  .details-u > summary::-webkit-details-marker { display: none; }
+  .details-u > summary::after { content: "+"; @apply text-2xl font-normal leading-none text-ink/50 transition-transform duration-200; }
+  .details-u[open] > summary::after { transform: rotate(45deg); }
+  .details-u > div { @apply px-5 pb-5 text-ink/80; }
+
+  .tbl { @apply w-full border-collapse text-left text-[15px]; }
+  .tbl th { @apply border-b border-ink/10 bg-paper px-4 py-3 text-xs font-bold uppercase tracking-wider text-ink/60; }
+  .tbl td { @apply border-b border-ink/5 px-4 py-3 align-top; }
+}
+
+/* Movimiento: sólo transform/opacity, 150–250 ms, ease-out */
+.pop { transform-origin: top center; transition: opacity .18s cubic-bezier(.23,1,.32,1), transform .18s cubic-bezier(.23,1,.32,1); }
+.pop[data-open="false"] { opacity: 0; transform: translateY(-4px) scale(.98); pointer-events: none; visibility: hidden; }
+.drawer { transition: transform .25s cubic-bezier(.23,1,.32,1), visibility .25s; }
+.drawer[data-open="false"] { transform: translateX(100%); visibility: hidden; }
+.toast { transition: opacity .2s ease-out, transform .2s cubic-bezier(.23,1,.32,1); }
+.toast[data-open="false"] { opacity: 0; transform: translateY(8px); pointer-events: none; }
+.step-panel { animation: fadeUp .22s cubic-bezier(.23,1,.32,1); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+@media print { header, footer, .no-print { display: none !important; } }
